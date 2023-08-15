@@ -30,12 +30,13 @@ object Calculation {
 
 
   def calcVelocity(velocityStartPoint: Double, diameter: Double,
-                   position: Int, deltaDiameter: Double): Double = {
-    val height = position * deltaDiameter
+                   y: Double, deltaDiameter: Double): Double = {
     val semiDiam = diameter / 2
-    val centring = if(semiDiam > height) semiDiam - height else height - semiDiam
+    val centring = if(semiDiam >= y) semiDiam - y else y - semiDiam // d/2 - y or y - d / 2
     val velocity =
       velocityStartPoint*(1 - CONST_6  * Math.pow(Math.abs(centring), 2) / Math.pow(diameter, 2))
+      //velocityStartPoint*(1-0.6*(diameter/2-))
+    println(s"$diameter(позиция - ${y/deltaDiameter}) - координата: $y - расстояние от центра: $centring, скорость: $velocity")
     velocity
   }
 

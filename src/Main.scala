@@ -16,9 +16,14 @@ object Main extends App {
     Random.nextDouble(),
     isBorderPoint = Random.nextBoolean()
   )
-  val listPoints = List.fill(10)(generationSyntacticData)
+  val listPoints = List.fill(5)(generationSyntacticData)
   val pipe: Pipe = Pipe(
-    listPoints, length = 100, diameter = 10, verticalQuantity = 10, horizontalQuantity = 10, density = 10
+    listPoints,
+    length = 5,
+    diameter = 5,
+    horizontalQuantity = 5,
+    verticalQuantity = 5, // deltaLen = length / verticalQuantity
+    density = 10
   )
   val matrixHeaders = List("Velocity", "Flow", "Pressure", "Temperature", "Density")
   val matrixData = matrixHeaders.map { header =>
