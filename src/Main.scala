@@ -1,12 +1,44 @@
+import math.Calculation
 import model.{Pipe, Point}
+
+import scala.util.Random
+
 
 object Main extends App {
 
-  val point: Point = Point(
-    velocity = 10, flow = 10, pressure = 10, temperature = 2, isBorderPoint = true
+  val generationSyntacticVelocity: Double = Random.nextDouble()*1000
+
+  def generationSyntacticData: Point = Point(
+    generationSyntacticVelocity,
+    Random.nextDouble()*1000,
+    Random.nextDouble()*100,
+    Random.nextDouble()*10,
+    Random.nextDouble(),
+    isBorderPoint = Random.nextBoolean()
   )
+  val listPoints = List.fill(10)(generationSyntacticData)
   val pipe: Pipe = Pipe(
-    point, length = 10, diameter = 10, deltaLength = 2, deltaDiameter = 2, density = 10
+    listPoints, length = 100, diameter = 10, verticalQuantity = 10, horizontalQuantity = 10, density = 10
   )
-  println(pipe.getPoints)
+  val matrixHeaders = List("Velocity", "Flow", "Pressure", "Temperature", "Density")
+  val matrixData = matrixHeaders.map { header =>
+    pipe.getPoints.map(row => row.map(point =>
+      header match {
+        case "Velocity" => point.velocity.toString
+        case "Flow" => point.flow.toString
+        case "Pressure" => point.pressure.toString
+        case "Temperature" => point.temperature.toString
+        case "Density" => point.density.toString
+        case _ => ""
+      }).mkString("\t")
+    ).mkString("\n")
+  }
+
+  matrixData.zipWithIndex.foreach { case (data, index) =>
+    val header = matrixHeaders(index)
+    println(s"-----------$header-----------")
+    println(data)
+    println()
+  }
+
 }
